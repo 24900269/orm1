@@ -1,5 +1,5 @@
 # Ex02 Django ORM Web Application
-## Date: 20/11/2024
+## Date: 08/12/2024
 
 ## AIM
 To develop a Django application to store and retrieve data from a bank loan database using Object Relational Mapping(ORM).
@@ -24,28 +24,37 @@ Execute Django admin and create details for 10 books
 admin.py
 
 from django.contrib import admin
-from .models import Employee,EmployeeAdmin
-admin.site.register(Employee,EmployeeAdmin)
+from .models import BankLoan, BankLoanAdmin
+
+
+if not admin.site.is_registered(BankLoan):
+    admin.site.register(BankLoan, BankLoanAdmin)
+
 
 models.py
 
 from django.db import models
 from django.contrib import admin
-class Employee (models.Model):
-    eid=models.IntegerField(primary_key=True)
-    name=models.CharField(max_length=100)
-    salary=models.IntegerField()
-    age=models.IntegerField()
-    email=models.EmailField()
- 
-class EmployeeAdmin(admin.ModelAdmin):
-    list_display=('eid','name','salary','age','email')
+class BankLoan(models.Model):
+    loan_id = models.IntegerField(primary_key=True)
+    loan_type = models.CharField(max_length=30)
+    loan_amt = models.IntegerField()
+    cust_name = models.CharField(max_length=30)
+    cust_acno = models.IntegerField()
+
+    def __str__(self):
+        return f"Loan ID: {self.loan_id}, Customer: {self.cust_name}"
+
+class BankLoanAdmin(admin.ModelAdmin):
+    list_display = ('loan_id', 'loan_type', 'loan_amt', 'cust_name', 'cust_acno')
+admin.site.register(BankLoan, BankLoanAdmin)
+
 
 ```
 
 
 ## OUTPUT
-![alt text](<Screenshot (1).png>)
+![alt text](<Screenshot (18).png>)
 
 
 
